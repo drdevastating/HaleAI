@@ -14,7 +14,7 @@ class Config:
     """Configuration class with validation"""
     
     # API Keys
-    PINECONE_API_KEY: str = os.getenv("PINECONE_API_KEY", "")
+    PINECONE_API_KEY: str = os.getenv("PINECONE_API_KEY", "") #second arg is default value if env var is not set
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     
     # Pinecone Configuration

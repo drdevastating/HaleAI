@@ -17,12 +17,12 @@ except Exception:
 from config import *
 
 
-class VectorStoreManager:
+class VectorStoreManager: # a manager / wrapper class to handle Pinecone vector store operations, including index creation, document loading, and retrieval
     """Manages Pinecone vector store operations"""
     
     def __init__(self, embeddings):
         self.embeddings = embeddings
-        self.pc = Pinecone(api_key=PINECONE_API_KEY)
+        self.pc = Pinecone(api_key=PINECONE_API_KEY) #created a pinecone client
         self.index_name = PINECONE_INDEX_NAME
         self._ensure_index_exists()
         self.vectorstore = None
@@ -45,7 +45,7 @@ class VectorStoreManager:
     def load_documents(self, documents: List[Document]):
         """Load documents into Pinecone (run once for initial setup)"""
         print("📤 Uploading documents to Pinecone...")
-        self.vectorstore = PineconeVectorStore.from_documents(
+        self.vectorstore = PineconeVectorStore.from_documents( #from_documents does ingestion of documents into the vector store
             documents=documents,
             embedding=self.embeddings,
             index_name=self.index_name
@@ -65,7 +65,7 @@ class VectorStoreManager:
     
     def _create_retriever(self):
         """Create retriever from vector store"""
-        self.retriever = self.vectorstore.as_retriever(
+        self.retriever = self.vectorstore.as_retriever( # provides a retriever interface for querying the vector store
             search_type="similarity",
             search_kwargs={"k": RETRIEVER_K}
         )
